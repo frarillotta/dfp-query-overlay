@@ -4,6 +4,14 @@ var slots = window.top.googletag.pubads().getSlots();
 
 var on = true;
 
+try {
+
+    clearOverlay();
+
+}   catch (err) {
+
+};
+
 init(slots);
 
 
@@ -49,6 +57,20 @@ function renderDiv (slot) {
 
         div.style.zIndex = "999999999999";
 
+        var info = document.createElement("p");
+
+        info.style.fontFamily = "Arial, Helvetica, sans-serif";
+
+        info.style.fontSize = "12px";
+
+        info.style.fontWeight = "bold";
+
+        info.style.textAlign = "center";
+
+        info.innerText = "line item ID : " + getLineItemId(slot);
+
+        div.append(info);
+
         var data = JSON.stringify(queryDfpGateway(slot)).split(",");
 
         for (i = 0; i < data.length; i++) {
@@ -85,7 +107,7 @@ function renderDiv (slot) {
 
     } catch (err) {
 
-        return
+        return;
 
     }
 
@@ -100,7 +122,7 @@ function getWidth(selector) {
 
     } catch (err) {
 
-        return 0
+        return 0;
 
     }
 
@@ -115,7 +137,7 @@ function getHeight(selector) {
 
     } catch (err) {
 
-        return 0
+        return 0;
 
     }
 
@@ -128,16 +150,15 @@ function getDfpId(slot) {
 
     let dfpId = adUnitPath.split("/")[1];
 
-    return dfpId
+    return dfpId;
 
 }
-
 
 function queryDfpGateway(slot) {
 
     if (!getLineItemId(slot)) {
 
-        return ("Adx or AdSense Line Item")
+        return ("Adx or AdSense Line Item");
 
     }
 
@@ -151,7 +172,7 @@ function queryDfpGateway(slot) {
 
         setTimeout(() => {
 
-            queryDfpGateway(slot)
+            queryDfpGateway(slot);
 
         }, 2000);
 
@@ -159,7 +180,7 @@ function queryDfpGateway(slot) {
 
     if (gatewayResponse.state === "READY" || "NO_ACCOUNT_ACCESS") {
 
-        return gatewayResponse
+        return gatewayResponse;
 
     }
 
@@ -172,7 +193,7 @@ function getLineItemId(slot) {
 
     if (!responseInformation) {
 
-        return
+        return;
 
     }
 
@@ -231,6 +252,6 @@ function checkReload() {
 
         }
 
-    })
+    });
 
 }
